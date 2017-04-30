@@ -9,7 +9,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/apn', cors(), (req, res) => {
-  console.log(req);
+  console.log(req.body);
     var options = {
         key: __dirname + '/key.pem', // Key file path
         passphrase: 'Theplow19',
