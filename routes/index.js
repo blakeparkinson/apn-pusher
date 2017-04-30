@@ -9,6 +9,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/apn', cors(), (req, res) => {
+  console.log(req);
     var options = {
         key: __dirname + '/key.pem', // Key file path
         passphrase: 'Theplow19',
@@ -17,21 +18,23 @@ router.post('/apn', cors(), (req, res) => {
         enhanced: true
     };
 
+    let token = req.body.token;
+    let alert = req.body.alert;
+    let payload = req.body.payload;
+    let topic = req.body.topic;
+
     var apnProvider = new apn.Provider(options);
 
-    let deviceToken = "51733ecfe5644c385a1d2b6ba317c42c7a54539130ddf289adddec9d5f2b8f54";
+    let deviceToken = token;
 
     var note = new apn.Notification();
 
-    note.expiry = Math.floor(Date.now() / 1000) + 3600; // Expires 1 hour from now.
+    //note.expiry = Math.floor(Date.now() / 1000) + 3600; // Expires 1 hour from now.
     note.badge = 1;
     note.sound = "ping.aiff";
-    note.alert = "\uD83D\uDCE7 \u2709 From the node server";
-    note.payload = {
-        'messageFrom': 'Blake Parkinson',
-        'id': 678
-    };
-    note.topic = "com.schooldeets.app";
+    note.alert = alert;
+    note.payload = payload;
+    note.topic = topic;
 
     apnProvider.send(note, deviceToken).then((result) => {
         console.log(result);
