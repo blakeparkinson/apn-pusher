@@ -9,14 +9,27 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/apn', cors(), (req, res) => {
-  console.log(req.body);
-    var options = {
+  var options;
+  if (req.body.dev){
+    options = {
         key: __dirname + '/key.pem', // Key file path
-        passphrase: 'Theplow19',
+        passphrase: process.env.pass,
         cert: __dirname + '/cert.pem', // String or Buffer of CA data to use for the TLS connection
         production: false,
         enhanced: true
     };
+  }
+
+  else {
+    options = {
+        key: __dirname + '/key_prod.pem', // Key file path
+        passphrase: process.env.pass,
+        cert: __dirname + '/cert_prod.pem', // String or Buffer of CA data to use for the TLS connection
+        production: true,
+        enhanced: true
+    };
+
+  }
 
     let token = req.body.token;
     let alert = req.body.alert;
