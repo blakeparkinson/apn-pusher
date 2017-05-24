@@ -62,4 +62,9 @@ router.post('/apn', cors(), (req, res) => {
 
 });
 
+router.get('/androidlink', cors(), (req, res) => {
+    var androidLinks = ['asbury.dpsk12.org'];
+    res.json({result: androidLinks});
+})
+
 module.exports = router;
