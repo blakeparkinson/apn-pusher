@@ -16,9 +16,9 @@ router.post('/apn', cors(), (req, res) => {
         var options;
         if (req.body.topic == 'com.parkcurity.app'){
             options = {
-                key: __dirname + '/parkcurity_key.pem', // Key file path
+                key: __dirname + '/parkcurity_key_dev.pem', // Key file path
                 passphrase: process.env.pass,
-                cert: __dirname + '/parkcurity_cert.pem', // String or Buffer of CA data to use for the TLS connection
+                cert: __dirname + '/parkcurity_cert_dev.pem', // String or Buffer of CA data to use for the TLS connection
                 production: false,
                 enhanced: true
             };
