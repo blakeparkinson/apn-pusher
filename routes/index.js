@@ -12,12 +12,18 @@ router.post('/apn', cors(), (req, res) => {
     if (!req.body.secret_sauce) {
         res.json({error: true, message: 'api key not provided'});
 
-    } else if (req.body.secret_sauce != process.env.SecretSauce) {
-        res.json({error: true, message: 'invalid api key'});
-
-    } else {
+    }  else {
         var options;
-        if (req.body.dev) {
+        if (req.body.topic == 'com.parkcurity.app'){
+            options = {
+                key: __dirname + '/parkcurity_key.pem', // Key file path
+                passphrase: process.env.pass,
+                cert: __dirname + '/parkcurity_cert.pem', // String or Buffer of CA data to use for the TLS connection
+                production: false,
+                enhanced: true
+            };
+        }
+        else if (req.body.dev) {
             options = {
                 key: __dirname + '/key.pem', // Key file path
                 passphrase: process.env.pass,
@@ -55,7 +61,6 @@ router.post('/apn', cors(), (req, res) => {
         note.topic = topic;
 
         apnProvider.send(note, deviceToken).then((result) => {
-            console.log(result);
             res.json({success: true, result: result});
         });
     }
