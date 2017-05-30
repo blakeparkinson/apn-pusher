@@ -9,6 +9,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/apn', cors(), (req, res) => {
+    console.log(req.body);
     if (!req.body.secret_sauce) {
         res.json({error: true, message: 'api key not provided'});
 
@@ -60,8 +61,6 @@ router.post('/apn', cors(), (req, res) => {
         note.payload = payload;
         note.topic = topic;
         
-        console.log('sending push to token: ' + token);
-
         apnProvider.send(note, deviceToken).then((result) => {
             res.json({success: true, result: result});
         });
