@@ -9,7 +9,9 @@ var index = require('./routes/index');
 
 var app = express();
 
-//require('newrelic');
+if (process.env.isProd){
+  require('newrelic');
+}
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

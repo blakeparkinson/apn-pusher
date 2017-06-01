@@ -56,6 +56,8 @@ router.post('/apn', cors(), (req, res) => {
 
 
         let deviceToken = token;
+        
+        console.log('sending push to token: ' + deviceToken);
 
         var note = new apn.Notification();
 
