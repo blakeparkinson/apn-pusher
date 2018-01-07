@@ -76,6 +76,7 @@ router.post('/apn', cors(), (req, res) => {
 });
 
 router.get('/androidlink', cors(), (req, res) => {
+    console.log(req.query);
     var androidLinks = ['asbury.dpsk12.org'];
     res.json({result: androidLinks});
 })
